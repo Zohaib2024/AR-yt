@@ -160,6 +160,17 @@
 
 				//AR SETUP
 
+				function onselect (){
+
+					if (reticle.visible){
+
+						current_object.position.setFromMatrixPosition(reticle.matrix);
+						current_object.visible = true ;
+
+					}
+
+}
+
 				let options = {
 					requiredFeatures: ['hit-test'],
 					optionalFeatures: ['dom-overlay'],
