@@ -175,6 +175,15 @@
 
             window.addEventListener( 'resize', onWindowResize, false );
 
+            // Start camera access
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    console.log('Camera access granted');
+                    // If camera access is granted, you can proceed with AR
+                })
+                .catch(function(error) {
+                    console.error('Camera access denied', error);
+                });
         }
 
         function onWindowResize() {
