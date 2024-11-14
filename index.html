@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<link type="text/css" rel="stylesheet" href="main.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
+
 	</head>
 	<body>
 
@@ -73,8 +75,8 @@
 			function loadModel(model){
 				new RGBELoader()
 				.setDataType(THREE.UnsignedByteType)
-				.setPath('.textures/')
-				.load('photo.hdr',function(texture){
+				.setPath('textures/')
+				.load('photo.hdr', function(texture){
 
 					var envmap = pmremGenerator.fromEquirectangular(texture).texture;
 
@@ -83,7 +85,7 @@
 					pmremGenerator.dispose();
 					render();
 
-					var loader = new GLTFLoader().setpath('id/');
+					var loader = new GLTFLoader().setPath('3d/');
 					loader.load(model + ".glb" , function(glb){
 						current_object =glb.scene;
 						scene.add(current_object);
@@ -92,6 +94,18 @@
 					})
 				});
 			}
+			
+// 			function loadModel(model) {
+//     // Skip the texture loading part and directly load the model
+//     var loader = new GLTFLoader().setPath('3d/');
+//     loader.load(model + ".glb", function(glb) {
+//         current_object = glb.scene;
+//         scene.add(current_object);
+
+//         render();
+//     });
+// }
+
 
 			function init() {
 
