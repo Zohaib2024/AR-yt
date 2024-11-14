@@ -22,7 +22,8 @@
           
         <span style="font-size:30px;cursor:pointer;position: absolute;" onclick="openNav()">&#9776; open</span>
     
-        <button type="button" id="place-button">PLACE</button>
+        <button type="button" id="start-ar-button">START AR</button>
+        <button type="button" id="place-button" style="display: none;">PLACE</button>
     </div>
 
     <script>
@@ -66,6 +67,10 @@
 
         $("#place-button").click(function(){
             arPlace();
+        });
+
+        $("#start-ar-button").click(function() {
+            startAR();
         });
 
         function arPlace(){
@@ -163,7 +168,8 @@
 
             options.domOverlay = { root: document.getElementById('content')};
 
-            document.body.appendChild( ARButton.createButton(renderer, options));
+            // Initialize AR setup when AR button is clicked
+            // document.body.appendChild( ARButton.createButton(renderer, options));
 
             reticle = new THREE.Mesh(
                 new THREE.RingBufferGeometry( 0.15, 0.2, 32 ).rotateX( - Math.PI / 2 ),
@@ -175,7 +181,7 @@
 
             window.addEventListener( 'resize', onWindowResize, false );
 
-            // Start camera access
+            // Start camera access only when AR is triggered
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(function(stream) {
                     console.log('Camera access granted');
@@ -193,6 +199,21 @@
 
             renderer.setSize( window.innerWidth, window.innerHeight );
 
+        }
+
+        function startAR() {
+            // Start AR session when the AR button is clicked
+            let options = {
+                requiredFeatures: ['hit-test'],
+                optionalFeatures: ['dom-overlay'],
+            };
+
+            options.domOverlay = { root: document.getElementById('content')};
+            document.body.appendChild( ARButton.createButton(renderer, options));
+
+            // Update UI and set AR mode flag
+            document.getElementById('start-ar-button').style.display = "none";
+            isAR = true;
         }
 
         function animate() {
